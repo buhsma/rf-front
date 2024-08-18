@@ -96,8 +96,9 @@
         background-color: var(--background-light);
         padding: .8rem;
         // transform: translateY(-7.5rem);
-        margin-left: 5.5px;
-        margin-bottom: 5.5px;
+        // margin-left: 5.5px;
+        // margin-bottom: 5.5px;
+        margin: 0 6px 6px 5.9px;
         z-index: 10;
         border-top-right-radius: var(--border-radius);
         border-bottom-left-radius: var(--border-radius);
