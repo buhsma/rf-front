@@ -1,0 +1,70 @@
+:root {
+    --primary: #42b883;
+    --primary-light: #57fdb2;
+    --primary-dark: #2a7151;
+    --secondary: #111;
+    --tertiary: #dd0000;
+
+    --background: #35495e;
+    --background-light: #4a627a;
+    --background-dark: #1c2733;
+    --border-radius: .4rem;
+    
+    --nav-width: 14rem;
+    --linear-gradient: linear-gradient(163deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    background: var(--background);
+}
+
+button {
+    cursor: pointer;
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+}
+@import 'btn1.scss';
+@import 'form.scss';
+@import 'grid.scss';
+
+
+
+#app {
+    display: flex;
+
+    main {
+        flex: 1 1 0;
+        margin-bottom: 3rem;
+        @media (max-width: 768px) {
+            padding-left: 4rem;
+        }
+    }
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+
+@keyframes rotate {
+    100% {
+        transform: rotate(1turn);
+    }
+}
+

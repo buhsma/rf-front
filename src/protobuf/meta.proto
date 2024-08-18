@@ -1,0 +1,7 @@
+package meta;
+syntax = "proto3";
+
+message Meta {
+    string fileName = 1;
+    int32 totalChunks = 2;
+}

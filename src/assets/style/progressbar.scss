@@ -1,0 +1,28 @@
+.progressbar {
+    height: 25rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    @media (max-width: 1000px) {
+        flex-direction: column;
+    }
+    div {
+        background: var(--background-dark);
+        padding: 1rem;
+        border: 1px solid var(--primary);
+        width: 100%;
+
+        label {
+            color: var(--primary);
+        }
+
+        progress {
+            width: 100%;
+        }
+        span {
+            color: #ccc;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+@mixin grid-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(285px, 6fr) 1fr;
+  gap: 1rem;
+}
+
+@mixin grid-layout1 {
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, 6fr) 1fr;
+
+  @media (min-width: 1000px) {
+    grid-template-columns: 1fr 3fr 3fr 1fr;
+    gap: 3rem;
+  }
+}
+
+@mixin grid-layout2 {
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 6fr) 1fr;
+  gap: 1rem;
+}

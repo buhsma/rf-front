@@ -1,0 +1,33 @@
+.showBox {
+    height: 25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 1000px) {
+        height: 20rem;
+    }
+    span {
+        background: var(--background-dark);
+        color: var(--primary-light);
+        padding: 1rem;
+        border: 1px solid var(--primary);
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        
+        @media (max-width: 850px) {
+            text-align: left;
+            word-break: break-all;
+        }
+    }
+    
+    button {
+        width: 10rem;
+
+        @media (max-width: 1000px) {
+            width: 100%;
+        }
+    }
+}
