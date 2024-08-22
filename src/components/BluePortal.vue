@@ -58,10 +58,8 @@ import protobuf from 'protobufjs';
 import authState from '@/tools/authState';
 import InputField from '@/components/InputField.vue';
 // import FileChunk from '@/protobuf/protoLoader';
-import { FileChunk } from '@/protobuf/fileChunk.js';
-import { Meta } from '@/protobuf/meta.js';
-// import * as fileChunkPb from '@/protobuf/fileChunk.js';
-// import * as metaPb from '@/protobuf/meta.js';
+import * as fileChunkPb from '@/protobuf/fileChunk.js';
+import * as metaPb from '@/protobuf/meta.js';
 
 
 export default {
@@ -82,8 +80,8 @@ export default {
         const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
         const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
         
-        const FileChunk = FileChunk;
-        const Meta = Meta;
+        const FileChunk = fileChunkPb.FileChunk;
+        const Meta = metaPb.Meta;
         //load proto files
         //just for development
         // let FileChunk;
