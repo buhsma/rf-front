@@ -58,6 +58,8 @@ import protobuf from 'protobufjs';
 import authState from '@/tools/authState';
 import InputField from '@/components/InputField.vue';
 // import FileChunk from '@/protobuf/protoLoader';
+import * as fileChunkPb from '@/protobuf/fileChunk.js';
+import * as metaPb from '@/protobuf/meta.js';
 
 
 export default {
@@ -76,24 +78,27 @@ export default {
         const encryptProgress = ref(0);
         const worker = new Worker(new URL('@/tools/blueWorker.js', import.meta.url));
         const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
+        
+        const FileChunk = fileChunkPb.FileChunk;
+        const Meta = metaPb.Meta;
         //load proto files
         //just for development
-        let FileChunk;
-        fetch('src/protobuf/fileChunk.proto')
-            .then(response => response.text())
-            .then(proto => {
-                const root = protobuf.parse(proto).root;
+        // let FileChunk;
+        // fetch('src/protobuf/fileChunk.proto')
+        //     .then(response => response.text())
+        //     .then(proto => {
+        //         const root = protobuf.parse(proto).root;
 
-                FileChunk = root.lookupType("fileChunk.FileChunk");
-            });
-        let Meta;
-        fetch('src/protobuf/meta.proto')
-            .then(response => response.text())
-            .then(proto => {
-                const root = protobuf.parse(proto).root;
+        //         FileChunk = root.lookupType("fileChunk.FileChunk");
+        //     });
+        // let Meta;
+        // fetch('src/protobuf/meta.proto')
+        //     .then(response => response.text())
+        //     .then(proto => {
+        //         const root = protobuf.parse(proto).root;
 
-                Meta = root.lookupType("meta.Meta");
-            });
+        //         Meta = root.lookupType("meta.Meta");
+        //     });
 
         let chunksUploaded = 0;
         let chunksEncrypted = 0;

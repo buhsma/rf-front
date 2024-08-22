@@ -1,5 +1,5 @@
-package meta;
 syntax = "proto3";
+package meta;
 
 message Meta {
     string fileName = 1;
