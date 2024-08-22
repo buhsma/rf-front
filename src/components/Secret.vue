@@ -88,6 +88,7 @@ export default {
     setup(props) {
         const status = ref('ready');
         const secret = ref('');
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;   
 
         const handleDecryptSecret = async (secretString, ivString, key) => {
             // Convert the iv and secret back to their original formats
@@ -119,11 +120,11 @@ export default {
 
         const fetchSecret = async () => {
             try {
-                const response = await axios.post(`/api/secret/${props.id}/`);
+                const response = await axios.post(`${BACKEND_URL}/api/secret/${props.id}/`);
                 secret.value = await handleDecryptSecret(response.data.secret, response.data.iv, props.cryptoKey);
                 status.value = 'done';
 
-                await axios.post(`/api/delete/${props.id}/`);
+                await axios.post(`${BACKEND_URL}/api/delete/${props.id}/`);
             } catch (error) {
                 console.error(error);
             }

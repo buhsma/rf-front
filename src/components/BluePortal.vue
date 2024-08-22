@@ -58,8 +58,10 @@ import protobuf from 'protobufjs';
 import authState from '@/tools/authState';
 import InputField from '@/components/InputField.vue';
 // import FileChunk from '@/protobuf/protoLoader';
-import * as fileChunkPb from '@/protobuf/fileChunk.js';
-import * as metaPb from '@/protobuf/meta.js';
+import { FileChunk } from '@/protobuf/fileChunk.js';
+import { Meta } from '@/protobuf/meta.js';
+// import * as fileChunkPb from '@/protobuf/fileChunk.js';
+// import * as metaPb from '@/protobuf/meta.js';
 
 
 export default {
@@ -78,9 +80,10 @@ export default {
         const encryptProgress = ref(0);
         const worker = new Worker(new URL('@/tools/blueWorker.js', import.meta.url));
         const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
         
-        const FileChunk = fileChunkPb.FileChunk;
-        const Meta = metaPb.Meta;
+        const FileChunk = FileChunk;
+        const Meta = Meta;
         //load proto files
         //just for development
         // let FileChunk;
@@ -130,7 +133,7 @@ export default {
             }
 
             try {
-                await axios.post('/api/secretup/', {
+                await axios.post(`${BACKEND_URL}/api/secretup/`, {
                     secret: secretString,
                     id: id.value,
                     iv: ivString,
@@ -257,7 +260,7 @@ export default {
             }
 
             try {
-                await axios.post(`/api/upload/`, buffer, {
+                await axios.post(`${BACKEND_URL}/api/upload/`, buffer, {
                     headers: headers,
                     responseType: 'arraybuffer'
                 });
@@ -276,7 +279,7 @@ export default {
 
         const uploadChunk = async (buffer, id, index, totalChunks, retryCount = 0) => {
             try {
-                await axios.post(`/api/upload/`, buffer, {
+                await axios.post(`${BACKEND_URL}/api/upload/`, buffer, {
                     headers: {
                         'Content-Type': 'application/octet-stream',
                         'id': id,

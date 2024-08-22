@@ -32,11 +32,11 @@ export default {
         const password = ref('')
         const serverResponse = ref('')
         const router = useRouter()
-
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
         const { setAuthState } = authState()
 
         const login = () => {
-            axios.post('/api/token/', {
+            axios.post(`${BACKEND_URL}/api/token/`, {
                 username: email.value,
                 password: password.value
             })

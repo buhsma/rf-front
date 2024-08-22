@@ -88,6 +88,8 @@ import { ref, onBeforeMount } from 'vue';
 import { revertKey } from '@/tools/crypto';
 import streamSaver from 'streamsaver';
 import protobuf from 'protobufjs';
+import * as fileChunkPb from '@/protobuf/fileChunk.js';
+import * as metaPb from '@/protobuf/meta.js';
 
 
 
@@ -103,28 +105,31 @@ export default {
         const downloadProgress = ref(0);
         const chunkBuffer = [];
         const chunkBufferMax = 3;
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+        const FileChunk = fileChunkPb.FileChunk;
+        const Meta = metaPb.Meta;
 
         let writer;
 
 
 
-        let FileChunk;
-        //half a day to find a / in front of src/protobuf/ was missing. works jusr fine without it in the bluePortal
-        fetch('/src/protobuf/fileChunk.proto')
-            .then(response => response.text())
-            .then(proto => {
-                const root = protobuf.parse(proto).root;
+        // let FileChunk;
+        // //half a day to find a / in front of src/protobuf/ was missing. works jusr fine without it in the bluePortal
+        // fetch('/src/protobuf/fileChunk.proto')
+        //     .then(response => response.text())
+        //     .then(proto => {
+        //         const root = protobuf.parse(proto).root;
 
-                FileChunk = root.lookupType("fileChunk.FileChunk");
-            });
-        let Meta;
-        fetch('/src/protobuf/meta.proto')
-            .then(response => response.text())
-            .then(proto => {
-                const root = protobuf.parse(proto).root;
+        //         FileChunk = root.lookupType("fileChunk.FileChunk");
+        //     });
+        // let Meta;
+        // fetch('/src/protobuf/meta.proto')
+        //     .then(response => response.text())
+        //     .then(proto => {
+        //         const root = protobuf.parse(proto).root;
 
-                Meta = root.lookupType("meta.Meta");
-            });
+        //         Meta = root.lookupType("meta.Meta");
+        //     });
 
         const processChunkBuffer = async (key, totalChunks) => {
             while (status.value === 'downloading' || chunkBuffer.length > 0) {
@@ -162,7 +167,7 @@ export default {
                 let retryCount = 0;
                 while (retryCount < 3) {
                     try {
-                        const response = await fetch(`/api/download/${props.id}/${index}`);
+                        const response = await fetch(`${BACKEND_URL}/api/download/${props.id}/${index}`);
                         const value = await response.arrayBuffer();
                         const decoded = FileChunk.decode(new Uint8Array(value));
                         chunkBuffer.push({ index: index, chunk: decoded.chunk, iv: decoded.iv });
@@ -183,7 +188,7 @@ export default {
             }
         };
         const fetchMeta = async (id, key) => {
-            const response = await fetch(`/api/download/${id}/meta`);
+            const response = await fetch(`${BACKEND_URL}/api/download/${id}/meta`);
             const ivString = response.headers.get('iv');
             const value = await response.arrayBuffer();
             const importedKey = await crypto.subtle.importKey(
@@ -206,7 +211,7 @@ export default {
             return meta;
         };
         const sendConfirmation = async () => {
-            await fetch(`/api/confirm/${props.id}/`, {
+            await fetch(`${BACKEND_URL}/api/confirm/${props.id}/`, {
                 method: 'POST'
             });
         };

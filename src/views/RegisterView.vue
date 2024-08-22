@@ -32,14 +32,14 @@ export default {
         const password = ref('')
         const confirmPassword = ref('')
         const serverResponse = ref('')
-
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
         const register = () => {
             if (password.value !== confirmPassword.value) {
                 serverResponse.value = 'Passwords do not match'
                 return
             }
 
-            axios.post('/api/register', {
+            axios.post(`${BACKEND_URL}/api/register`, {
                 email: email.value,
                 password: password.value
             })

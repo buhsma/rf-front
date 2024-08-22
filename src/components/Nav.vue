@@ -208,6 +208,7 @@ export default {
     setup() {
         const { userIsAuthenticated, setAuthState, checkAuth } = authState();
         const router = useRouter()
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
         const isExpanded = ref(localStorage.getItem('expanded') !== 'false');
         const toggleNav = () => {
             isExpanded.value = !isExpanded.value;
@@ -215,7 +216,7 @@ export default {
         };
         const logout = () => {
             console.log('logout')
-            axios.post('/api/token/blacklist/', {
+            axios.post(`${BACKEND_URL}/api/tocken/blacklist/`, {
                 refresh: localStorage.getItem('refresh')
             })
                 .then(function (response) {
