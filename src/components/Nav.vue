@@ -216,12 +216,12 @@ export default {
         };
         const logout = () => {
             console.log('logout')
-            axios.post(`${BACKEND_URL}/api/tocken/blacklist/`, {
+            axios.post(`${BACKEND_URL}/api/token/blacklist/`, {
                 refresh: localStorage.getItem('refresh')
             })
                 .then(function (response) {
                     localStorage.removeItem('access');
-                    localStorage.removeItem('refresh');
+                    localStorage.removeItem('refresh'); 
                     setAuthState(false);
                     router.push('/');
                 })
