@@ -67,7 +67,7 @@ export default {
         InputField
     },
     setup() {
-        const { userIsAuthenticated } = authState();
+        const { userIsAuthenticated } = authState(); 
         const maxSimultaneousUploads = 5;
         const chunkSizeMB = 1;
         const status = ref('input');
