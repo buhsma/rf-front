@@ -58,8 +58,8 @@ import protobuf from 'protobufjs';
 import authState from '@/tools/authState';
 import InputField from '@/components/InputField.vue';
 // import FileChunk from '@/protobuf/protoLoader';
-import * as fileChunkPb from '@/protobuf/fileChunk.js';
-import * as metaPb from '@/protobuf/meta.js';
+import { encodeFileChunk } from '@/protobuf/fileChunk.js';
+import { encodeMeta, decodeMeta } from '@/protobuf/meta.js';
 
 
 export default {
@@ -80,8 +80,7 @@ export default {
         const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
         const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
         
-        const FileChunk = fileChunkPb.FileChunk;
-        const Meta = metaPb.Meta;
+
         //load proto files
         //just for development
         // let FileChunk;
@@ -164,11 +163,11 @@ export default {
             link.value = `${FRONTEND_URL}/download/${id.value}/${urlSaveKey}`;
             status.value = 'uploading';
 
-            const metaData = Meta.create({
+            const metaData = {
                 fileName: fileName,
                 totalChunks: totalChunks
-            });
-            const metaBuffer = Meta.encode(metaData).finish();
+            };
+            const metaBuffer = encodeMeta(metaData);
             const iv = crypto.getRandomValues(new Uint8Array(12));
             const ivString = btoa(String.fromCharCode.apply(null, iv));
             const metaEncrypted = await crypto.subtle.encrypt(
@@ -190,12 +189,12 @@ export default {
                 chunksEncrypted++;
                 encryptProgress.value = (chunksEncrypted / totalChunks) * 100;
 
-                let message = FileChunk.create({
+                let message = {
                     chunk: new Uint8Array(encryptedChunk.chunk),
                     iv: encryptedChunk.iv
-                });
+                };
 
-                let buffer = FileChunk.encode(message).finish();
+                const buffer = encodeFileChunk(message);
 
                 uploadQueue.value.push({ buffer, index: encryptedChunk.index });
 

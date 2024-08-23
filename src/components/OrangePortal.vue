@@ -88,8 +88,8 @@ import { ref, onBeforeMount } from 'vue';
 import { revertKey } from '@/tools/crypto';
 import streamSaver from 'streamsaver';
 import protobuf from 'protobufjs';
-import * as fileChunkPb from '@/protobuf/fileChunk.js';
-import * as metaPb from '@/protobuf/meta.js';
+import { decodeFileChunk } from '@/protobuf/fileChunk.js';
+import { decodeMeta } from '@/protobuf/meta.js';
 
 
 
@@ -106,8 +106,7 @@ export default {
         const chunkBuffer = [];
         const chunkBufferMax = 3;
         const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-        const FileChunk = fileChunkPb.FileChunk;
-        const Meta = metaPb.Meta;
+        
 
         let writer;
 
@@ -169,7 +168,7 @@ export default {
                     try {
                         const response = await fetch(`${BACKEND_URL}/api/download/${props.id}/${index}`);
                         const value = await response.arrayBuffer();
-                        const decoded = FileChunk.decode(new Uint8Array(value));
+                        const decoded = decodeFileChunk(new Uint8Array(value));
                         chunkBuffer.push({ index: index, chunk: decoded.chunk, iv: decoded.iv });
 
                         while (chunkBuffer.length >= chunkBufferMax) {
@@ -207,7 +206,7 @@ export default {
                 importedKey,
                 value
             );
-            const meta = Meta.decode(new Uint8Array(metaDecrypted));
+            const meta = decodeMeta(new Uint8Array(metaDecrypted));
             return meta;
         };
         const sendConfirmation = async () => {
