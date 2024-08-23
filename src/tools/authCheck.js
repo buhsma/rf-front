@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export async function isAuthenticated() {
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
     const token = localStorage.getItem('access');
     if (!token) {
         return false;
@@ -8,7 +9,7 @@ export async function isAuthenticated() {
 
     try {
         console.log('Checking token');
-        const response = await axios.post('/api/token/verify/', {
+        const response = await axios.post(`${BACKEND_URL}/api/token/verify/`, {
             token: token
         });
         console.log('Token response', response);
@@ -19,7 +20,7 @@ export async function isAuthenticated() {
             console.log('Refreshing token');
             const refresh = localStorage.getItem('refresh');
             try {
-                const response = await axios.post('/api/token/refresh/', {
+                const response = await axios.post(`${BACKEND_URL}/api/token/refresh/`, {
                     refresh: refresh
                 });
                 console.log('Refresh response', response);
