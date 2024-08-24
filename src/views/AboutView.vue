@@ -55,6 +55,11 @@ export default {
 
 .grid {
     @include grid-layout1();
+    margin-bottom: 2rem;
+
+    @media (max-width: 768px) {
+        margin-bottom: 0;
+    }
 }
 
 main {
@@ -62,6 +67,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .aboutText {
         align-self: center;
         margin: 3rem 20%;
@@ -69,7 +75,7 @@ main {
         background-color: var(--background-dark);
         position: relative;
         padding: .8rem;
-        
+
 
         &:after {
             content: '';
@@ -112,6 +118,7 @@ section {
     @media (min-width: 1000px) {
         margin-bottom: 0;
     }
+
     &:hover,
     &.active {
         box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);

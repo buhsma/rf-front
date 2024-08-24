@@ -162,13 +162,18 @@ export default {
             }
         };
         const fetchData = async (writer, totalChunks) => {
+            console.log('fetchData');
             for (let index = 0; index < totalChunks; index++) {
                 let retryCount = 0;
                 while (retryCount < 3) {
                     try {
+                        console.log('fetching chunk', index);
                         const response = await fetch(`${BACKEND_URL}/api/download/${props.id}/${index}`);
+                        console.log('response', response);
                         const value = await response.arrayBuffer();
+                        console.log('value', value);
                         const decoded = decodeFileChunk(new Uint8Array(value));
+                        console.log('decoded', decoded);
                         chunkBuffer.push({ index: index, chunk: decoded.chunk, iv: decoded.iv });
 
                         while (chunkBuffer.length >= chunkBufferMax) {
@@ -187,9 +192,13 @@ export default {
             }
         };
         const fetchMeta = async (id, key) => {
+            console.log('fetchMeta');
             const response = await fetch(`${BACKEND_URL}/api/download/${id}/meta`);
+            console.log('response', response);
             const ivString = response.headers.get('iv');
+            console.log('ivString', ivString);
             const value = await response.arrayBuffer();
+            console.log('value', value);
             const importedKey = await crypto.subtle.importKey(
                 'jwk',
                 key,
@@ -197,6 +206,7 @@ export default {
                 false,
                 ['decrypt']
             );
+            console.log('importedKey', importedKey);
             const iv = Uint8Array.from(atob(ivString), c => c.charCodeAt(0));
             const metaDecrypted = await crypto.subtle.decrypt(
                 {
@@ -206,7 +216,9 @@ export default {
                 importedKey,
                 value
             );
+            console.log('metaDecrypted', metaDecrypted);
             const meta = decodeMeta(new Uint8Array(metaDecrypted));
+            console.log('meta', meta);
             return meta;
         };
         const sendConfirmation = async () => {
@@ -218,8 +230,8 @@ export default {
 
         const handleDownload = async () => {
             status.value = 'downloading';
-            console.log('props.cryptoKey', props.cryptoKey);
-            console.log('props.id', props.id);
+            // console.log('props.cryptoKey', props.cryptoKey);
+            // console.log('props.id', props.id);
             const key = await revertKey(props.cryptoKey);
             const metadata = await fetchMeta(props.id, key);
             console.log(metadata);
