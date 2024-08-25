@@ -14,13 +14,18 @@
     </main>
 </template>
 <script>
+import { ref } from 'vue'
+
 
 export default {
-    data() {
-        return {
-            activeCardIndex: null,
-            aboutText: 'At RelayFox, we’re redefining how you share and protect your data. Experience effortless, secure file transfers with a service that’s built to handle anything you need to send.',
-            cards: [
+        setup() {
+            const activeCardIndex = ref(null)
+            const deactivateCard = () => {
+                if (event.target.closest('.card')) return
+                activeCardIndex.value = null
+            }
+            const aboutText = 'At RelayFox, we’re redefining how you share and protect your data. Experience effortless, secure file transfers with a service that’s built to handle anything you need to send.'
+            const cards = [
                 {
                     title: 'End-to-End Encryption',
                     content: 'At RelayFox, your privacy is our top priority. That’s why we utilize end-to-end encryption to secure your files from the moment they leave your device until they reach their intended recipient. This means that only you and the person you’re sending files to can decrypt and access the data. No one else—not even us—can access your files. With end-to-end encryption, you can trust that your sensitive information remains confidential and protected, every step of the way.'
@@ -45,18 +50,21 @@ export default {
                     title: 'Our Goals',
                     content: 'At RelayFox, our mission is to provide a secure, user-friendly file-sharing service that meets the needs of individuals and businesses alike. We’re committed to delivering a seamless experience that prioritizes privacy and security, ensuring that your data remains confidential and protected at all times. With RelayFox, you can share files with confidence, knowing that your information is safeguarded by the latest encryption standards and best practices. Our goal is to redefine how you share and protect your data, making secure file transfers effortless and accessible to everyone.'
                 }
-            ],
+            ]
+
+            document.getElementById('app').addEventListener('click', deactivateCard)
+            return { activeCardIndex, aboutText, cards }
         }
     }
-}
+
 </script>
 <style lang="scss" scoped>
 @import '@/assets/style/grid.scss';
 
 .grid {
-    @include grid-layout1();
     margin-bottom: 2rem;
-
+    @include grid-layout1();
+    
     @media (max-width: 768px) {
         margin-bottom: 0;
     }

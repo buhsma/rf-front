@@ -201,6 +201,10 @@ export default {
                 if (ongoingUploads < maxSimultaneousUploads) {
                     uploadNextChunk();
                 }
+                // chunk = null;
+                // buffer = null;
+
+                await new Promise(r => setTimeout(r, 0));
             }
 
             async function uploadNextChunk() {
