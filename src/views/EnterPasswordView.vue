@@ -20,6 +20,7 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import router from '@/router'
 
 export default {
     setup() {
@@ -39,7 +40,7 @@ export default {
                     password: password.value,
                 })
                     .then(function () {
-                        serverResponse.value = 'Password reset successful'
+                        router.push({ name: 'login' })
                     })
                     .catch(error => {
                         if (error.response) {
