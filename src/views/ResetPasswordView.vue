@@ -1,16 +1,19 @@
 <template>
-    <form @submit.prevent="resetPassword">
-        <h1>Reset Password</h1>
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="email" required>
-        <label for="password">New Password</label>
-        <input type="password" id="password" v-model="password" required>
-        <p>
-            Attention: Messages and files encrypted with the old password will be lost.
-        </p>
-        <button type="submit">Reset Password</button>
-        <p>{{ serverResponse }}</p>
-    </form>
+    <main class="main">
+        <form v-if="status === 'ready'" class="inputForm" @submit.prevent="resetPassword">
+            <h1>Reset Password</h1>
+            <div class="inputField">
+                <input type="email" id="email" v-model="email" required>
+                <label for="email">Email</label>
+            </div>
+            <button class="btn1" type="submit">Reset Password</button>
+            <p>{{ serverResponse }}</p>
+        </form> 
+        <div v-else class="inputForm">
+            <h1>Reset Password</h1>
+            <p>We have sent you an email with a link to reset your password.</p>
+        </div>
+    </main>
 </template>
 
 <script>
@@ -20,35 +23,22 @@ import axios from 'axios'
 export default {
     setup() {
         const email = ref('')
-        const password = ref('')
-        const serverResponse = ref('')
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+        const status = ref('ready')
 
         const resetPassword = () => {
-            axios.post('/api/reset_password', {
-                email: email.value,
-                password: password.value
+            axios.post(`${BACKEND_URL}/api/reset_password/`, {
+                email: email.value
             })
-                .then(function (response) {
-                    console.log(response)
-                    serverResponse.value = 'Password reset successful: ' + response.status
-                })
-                .catch(error => {
-                    if (error.response) {
-                        serverResponse.value = 'Password reset failed with status code: ' + error.response.status + ' ' + error.response.data.error
-                    } else if (error.request) {
-                        serverResponse.value = 'Password reset failed: No response from server'
-                    } else {
-                        serverResponse.value = 'Password reset failed: ' + error.message
-                    }
-                    console.error(error)
+                .then(function () {
+                    status.value = 'sent'
                 })
         }
 
         return {
             email,
-            password,
-            resetPassword,
-            serverResponse
+            status,
+            resetPassword
         }
     }
 }

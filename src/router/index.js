@@ -9,6 +9,7 @@ import Dashboard from '@/views/DashboardView.vue'
 import About from '@/views/AboutView.vue'
 import FAQ from '@/views/FAQView.vue'
 import Roadmap from '@/views/RoadmapView.vue'
+import EnterPassword from '@/views/EnterPasswordView.vue'
 import { isAuthenticated } from '@/tools/authCheck'
 
 const router = createRouter({
@@ -33,6 +34,12 @@ const router = createRouter({
       path: '/reset-password',
       name: 'reset-password',
       component: ResetPassword
+    },
+    {
+      path: '/reset-password/:id/:token',
+    	name: 'enter-new-password',
+    	component: EnterPassword,
+			props: true
     },
     {
       path: '/dashboard',
