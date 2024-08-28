@@ -1,7 +1,7 @@
 <template>
     <nav :class="`${isExpanded && 'expanded'}`">
         <div class="logo">
-            <RouterLink v-if="userIsAuthenticated" to="dashboard">
+            <RouterLink v-if="userIsAuthenticated" to="/dashboard">
                 <img alt="fox" src="@/assets/fox.png" />
             </RouterLink>
             <RouterLink v-else to="/">
@@ -16,7 +16,7 @@
 
         <h3>MENU</h3>
         <div class="menu">
-            <RouterLink v-if="userIsAuthenticated" class="button" to="dashboard">
+            <RouterLink v-if="userIsAuthenticated" class="button" to="/dashboard">
                 <span class="material-icons material-symbols-outlined">shield_person</span>
                 <span class="text">Dashboard</span>
             </RouterLink>
@@ -28,19 +28,19 @@
                 <span class="material-icons">person_add</span>
                 <span class="text">+ Create account</span>
             </RouterLink> -->
-            <RouterLink v-if="!userIsAuthenticated" class="button" to="login">
+            <RouterLink v-if="!userIsAuthenticated" class="button" to="/login">
                 <span class="material-icons material-symbols-outlined">add_moderator</span>
                 <span class="text">Login</span>
             </RouterLink>
-            <RouterLink class="button" to="about">
+            <RouterLink class="button" to="/about">
                 <span class="material-icons material-symbols-outlined">policy</span>
                 <span class="text">About</span>
             </RouterLink>
-            <RouterLink class="button" to="faq">
+            <RouterLink class="button" to="/faq">
                 <span class="material-icons material-symbols-outlined">shield_question</span>
                 <span class="text">FAQ</span>
             </RouterLink>
-            <!-- <RouterLink class="button" to="roadmap">
+            <!-- <RouterLink class="button" to="/roadmap">
                 <span class="material-icons">timeline</span>
                 <span class="text">Roadmap</span>
             </RouterLink> -->
