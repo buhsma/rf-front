@@ -209,7 +209,7 @@ export default {
         const { userIsAuthenticated, setAuthState, checkAuth } = authState();
         const router = useRouter()
         const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-        const isExpanded = ref(localStorage.getItem('expanded') !== 'false');
+        const isExpanded = ref(localStorage.getItem('expanded') === 'true');
         const toggleNav = () => {
             isExpanded.value = !isExpanded.value;
             localStorage.setItem('expanded', isExpanded.value);
