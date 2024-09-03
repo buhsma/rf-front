@@ -9,6 +9,7 @@ import Dashboard from '@/views/DashboardView.vue'
 import About from '@/views/AboutView.vue'
 import FAQ from '@/views/FAQView.vue'
 import Roadmap from '@/views/RoadmapView.vue'
+import Contact from '@/views/ContactView.vue'
 import EnterPassword from '@/views/EnterPasswordView.vue'
 import { isAuthenticated } from '@/tools/authCheck'
 
@@ -37,9 +38,9 @@ const router = createRouter({
     },
     {
       path: '/reset-password/:id/:token',
-    	name: 'enter-new-password',
-    	component: EnterPassword,
-			props: true
+      name: 'enter-new-password',
+      component: EnterPassword,
+      props: true
     },
     {
       path: '/dashboard',
@@ -65,6 +66,11 @@ const router = createRouter({
       component: Roadmap
     },
     {
+      path: '/contact',
+      name: 'contact',
+      component: Contact
+    },
+    {
       path: '/download/:id/:cryptoKey',
       name: 'download',
       component: Download,
@@ -75,7 +81,7 @@ const router = createRouter({
       name: 'secret',
       component: Download,
       props: true
-    },
+    }
   ]
 })
 

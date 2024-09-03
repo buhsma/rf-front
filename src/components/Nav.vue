@@ -44,6 +44,10 @@
                 <span class="material-icons">timeline</span>
                 <span class="text">Roadmap</span>
             </RouterLink> -->
+            <RouterLink class="button" to="/contact">
+                <span class="material-icons material-symbols-outlined">contact_support</span>
+                <span class="text">Contact</span>
+            </RouterLink>
             <button v-if="userIsAuthenticated" class="button" @click="logout">
                 <span class="material-icons">logout</span>
                 <span class="text">Logout</span>
